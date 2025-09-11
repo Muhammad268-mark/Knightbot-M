@@ -8,7 +8,7 @@ async function attpCommand(sock, chatId, message) {
     const text = userMessage.split(' ').slice(1).join(' ');
 
     if (!text) {
-        await sock.sendMessage(chatId, { text: 'Please provide text after the .attp command.' });
+        await sock.sendMessage(chatId, { text: 'Please provide text after the .attp command.' }, { quoted: message });
         return;
     }
 
@@ -39,12 +39,12 @@ async function attpCommand(sock, chatId, message) {
             mimetype: 'image/webp',
             packname: 'My Sticker Pack', 
             author: 'My Bot', 
-        });
+        }, { quoted: message });
 
         fs.unlinkSync(stickerPath);
     } catch (error) {
         console.error('Error generating sticker:', error);
-        await sock.sendMessage(chatId, { text: 'Failed to generate the sticker. Please try again later.' });
+        await sock.sendMessage(chatId, { text: 'Failed to generate the sticker. Please try again later.' }, { quoted: message });
     }
 }
 
